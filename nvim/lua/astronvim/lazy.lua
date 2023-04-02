@@ -29,7 +29,6 @@ local spec = astronvim.updater.options.pin_plugins and { { import = astronvim.up
 vim.list_extend(spec, { { import = "plugins" }, user_plugins })
 
 local colorscheme = astronvim.default_colorscheme and { astronvim.default_colorscheme } or nil
---local colorscheme = "oceanic_material"
 
 require("lazy").setup(astronvim.user_opts("lazy", {
   spec = spec,
@@ -43,5 +42,3 @@ require("lazy").setup(astronvim.user_opts("lazy", {
   },
   lockfile = vim.fn.stdpath "data" .. "/lazy-lock.json",
 }))
-
-

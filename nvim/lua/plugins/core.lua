@@ -1,10 +1,10 @@
 return {
   "nvim-lua/plenary.nvim",
-  { "AstroNvim/astrotheme",          opts = { plugins = { ["dashboard-nvim"] = true } } },
+  { "AstroNvim/astrotheme",          opts = { plugins = { ["dashboard-nvim"] = true } }, lazy = false,                                   priority = 1000, },
   { "famiu/bufdelete.nvim",          cmd = { "Bdelete", "Bwipeout" } },
-  { "max397574/better-escape.nvim",  event = "InsertCharPre",                           opts = { timeout = 300 } },
-  { "NMAC427/guess-indent.nvim",     event = "User AstroFile",                          config = require "plugins.configs.guess-indent" },
-  { "Shatur/neovim-session-manager", event = "BufWritePost",                            cmd = "SessionManager" },
+  { "max397574/better-escape.nvim",  event = "InsertCharPre",                            opts = { timeout = 300 } },
+  { "NMAC427/guess-indent.nvim",     event = "User AstroFile",                           config = require "plugins.configs.guess-indent" },
+  { "Shatur/neovim-session-manager", event = "BufWritePost",                             cmd = "SessionManager" },
   { "s1n7ax/nvim-window-picker",     opts = { use_winbar = "smart" } },
   {
     "mrjones2014/smart-splits.nvim",
@@ -104,6 +104,7 @@ return {
   {
     "glepnir/oceanic-material",
   },
+  { "catppuccin/nvim", name = "catppuccin", lazy = false },
   {
     'rmagatti/goto-preview',
     config = function()
