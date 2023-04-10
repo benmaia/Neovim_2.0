@@ -15,6 +15,7 @@ sudo apt install software-properties-common -y
 sudo add-apt-repository ppa:neovim-ppa/unstable -y
 sudo apt-get update
 sudo apt install neovim -y
+sudo apt install xclip -y
 
 # Install most recent version NodeJS && Yank
 curl -sL https://deb.nodesource.com/setup_14.x | sudo bash -

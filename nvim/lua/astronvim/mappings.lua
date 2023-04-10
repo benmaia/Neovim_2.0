@@ -1,6 +1,7 @@
 local utils = require "astronvim.utils"
 local is_available = utils.is_available
 local ui = require "astronvim.utils.ui"
+local bazel = require("bazel")
 
 local maps = { i = {}, n = {}, v = {}, t = {} }
 
@@ -15,7 +16,18 @@ local sections = {
   S = { name = "󱂬 Session" },
   t = { name = " Terminal" },
   j = { name = " Definitions" },
+  W = { name = " CTW" },
 }
+
+local subsections = {
+  a = { name = "󰓔 ADP" },
+  D = { name = "󰆼 Data Management" },
+  d = { name = " DDAD" },
+  m = { name = " Mdf4 Tool" },
+  h = { name = "󰤎 HOO" },
+  l = { name = "󰾃 Lane Guard" },
+}
+
 if not vim.g.icons_enabled then vim.tbl_map(function(opts) opts.name = opts.name:gsub("^.* ", "") end, sections) end
 
 -- Normal --
@@ -234,10 +246,10 @@ if is_available "telescope.nvim" then
     end,
     desc = "Find AstroNvim config files",
   }
-  maps.n["<leader>fB"] = { function() require("telescope.builtin").buffers() end, desc = "Find buffers" }
+  maps.n["<leader>fb"] = { function() require("telescope.builtin").buffers() end, desc = "Find buffers" }
   maps.n["<leader>fc"] = { function() require("telescope.builtin").grep_string() end, desc = "Find for word under cursor" }
   maps.n["<leader>fC"] = { function() require("telescope.builtin").commands() end, desc = "Find commands" }
-  maps.n["<leader>fb"] = {
+  maps.n["<C-p>"] = {
     function() require "telescope".extensions.file_browser.file_browser() end, desc = "File browser"
   }
   maps.n["<leader>ff"] = { function() require("telescope.builtin").find_files() end, desc = "Find files" }
@@ -379,15 +391,121 @@ maps.n["<leader>uu"] = { ui.toggle_url_match, desc = "Toggle URL highlight" }
 maps.n["<leader>uw"] = { ui.toggle_wrap, desc = "Toggle wrap" }
 maps.n["<leader>uy"] = { ui.toggle_syntax, desc = "Toggle syntax highlight" }
 
+-- Jump to Definitions
 maps.n["<leader>j"] = sections.j
 maps.n["<leader>jd"] = { "<cmd>lua vim.lsp.buf.definition()<cr>", desc = "Jump to definition" }
 maps.n["<leader>jw"] = { function() require('goto-preview').goto_preview_definition() end, desc = "Window definition" }
 maps.n["<leader>jv"] = { "<cmd>vsplit<cr><cmd>lua vim.lsp.buf.definition()<cr>", desc = "Vertical definition" }
+maps.n["<leader>jh"] = { "<cmd>lua vim.lsp.buf.hover()<cr>", desc = "Hover definition" }
 
+-- Work Directories
+maps.n["<leader>W"] = sections.W
+maps.n["<leader>Wd"] = subsections.d
+maps.n["<leader>Wdf"] = {
+  function()
+    require "telescope".extensions.file_browser.file_browser {
+      cwd = "/home/ctw/projects/ddad/"
+    }
+  end,
+  desc = "Find Files in DDAD"
+}
+maps.n["<leader>Wdg"] = {
+  function()
+    require('telescope.builtin').live_grep {
+      cwd = "/home/ctw/projects/ddad/"
+    }
+  end,
+  desc = "Find Words in DDAD"
+}
+maps.n["<leader>Wa"] = subsections.a
+maps.n["<leader>Waf"] = {
+  function()
+    require "telescope".extensions.file_browser.file_browser {
+      cwd = "/home/ctw/projects/ddad/application/adp/"
+    }
+  end,
+  desc = "Find Files in ADP"
+}
+maps.n["<leader>Wag"] = {
+  function()
+    require('telescope.builtin').live_grep {
+      cwd = "/home/ctw/projects/ddad/application/adp/"
+    }
+  end,
+  desc = "Find Words in ADP"
+}
+maps.n["<leader>Wh"] = subsections.h
+maps.n["<leader>Whf"] = {
+  function()
+    require "telescope".extensions.file_browser.file_browser {
+      cwd = "/home/ctw/projects/data-management/kpi/kpi-metrics/kpi_calculation/hands_off_option/"
+    }
+  end,
+  desc = "Find Files in HOO"
+}
+maps.n["<leader>Whg"] = {
+  function()
+    require('telescope.builtin').live_grep {
+      cwd = "/home/ctw/projects/data-management/kpi/kpi-metrics/kpi_calculation/hands_off_option/"
+    }
+  end,
+  desc = "Find Words in HOO"
+}
+maps.n["<leader>Wm"] = subsections.m
+maps.n["<leader>Wmf"] = {
+  function()
+    require "telescope".extensions.file_browser.file_browser {
+      cwd = "/home/ctw/projects/autobots/mdf4_tools/"
+    }
+  end,
+  desc = "Find Files in Mdf4 Tool"
+}
+maps.n["<leader>Wmg"] = {
+  function()
+    require('telescope.builtin').live_grep {
+      cwd = "/home/ctw/projects/autobots/mdf4_tools/"
+    }
+  end,
+  desc = "Find Words in Mdf4 Tool"
+}
+maps.n["<leader>WD"] = subsections.D
+maps.n["<leader>WDf"] = {
+  function()
+    require "telescope".extensions.file_browser.file_browser {
+      cwd = "/home/ctw/projects/data-management/"
+    }
+  end,
+  desc = "Find Files in Data Management"
+}
+maps.n["<leader>WDg"] = {
+  function()
+    require('telescope.builtin').live_grep {
+      cwd = "/home/ctw/projects/data-management/"
+    }
+  end,
+  desc = "Find Words in Data Management"
+}
+maps.n["<leader>Wl"] = subsections.l
+maps.n["<leader>Wlf"] = {
+  function()
+    require "telescope".extensions.file_browser.file_browser {
+      cwd = "/home/ctw/projects/ddad/application/adp/cas/components/AdLng/"
+    }
+  end,
+  desc = "Find Files in Lane Guard"
+}
+maps.n["<leader>Wlg"] = {
+  function()
+    require('telescope.builtin').live_grep {
+      cwd = "/home/ctw/projects/ddad/application/adp/cas/components/AdLng/"
+    }
+  end,
+  desc = "Find Words in Lane Guard"
+}
 -- Move lines
 maps.n["<A-Up>"] = { "<cmd>m-2<cr>" }
 maps.n["<A-Down>"] = { "<cmd>m+<cr>" }
-vim.cmd[[
+vim.cmd [[
 :vnoremap <A-Up> :m '<-2<CR>gv=gv
 :vnoremap <A-Down> :m '>+1<CR>gv=gv
 ]]
