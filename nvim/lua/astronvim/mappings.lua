@@ -17,6 +17,7 @@ local sections = {
   t = { name = " Terminal" },
   j = { name = " Definitions" },
   W = { name = " CTW" },
+  c = { name = "Copilot"},
 }
 
 local subsections = {
@@ -45,6 +46,11 @@ maps.n["<C-q>"] = { "<cmd>q!<cr>", desc = "Force quit" }
 maps.n["|"] = { "<cmd>vsplit<cr>", desc = "Vertical Split" }
 maps.n["\\"] = { "<cmd>split<cr>", desc = "Horizontal Split" }
 
+-- make me a lua settings to map the tab on copilot to <M-a>
+
+vim.keymap.set('i', '<M-a>', 'copilot#Accept("<CR>")', { expr = true, replace_keycodes = false})
+vim.g.copilot_no_tab_map = true
+--
 -- Plugin Manager
 maps.n["<leader>p"] = sections.p
 maps.n["<leader>pi"] = { function() require("lazy").install() end, desc = "Plugins Install" }

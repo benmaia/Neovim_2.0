@@ -3,10 +3,10 @@ return{
     "nvim-telescope/telescope-file-browser.nvim",
     dependencies = { "nvim-telescope/telescope.nvim", "nvim-lua/plenary.nvim" }
   },
-  {
-    "rhysd/vim-clang-format",
-    event = "VeryLazy",
-  },
+  -- {
+  --   "rhysd/vim-clang-format",
+  --   event = "VeryLazy",
+  -- },
   {
     "catppuccin/nvim",
     name = "catppuccin",
@@ -27,6 +27,10 @@ return{
     "xiyaowong/nvim-transparent",
     lazy = false,
   },
+  -- {
+  --   "github/copilot.vim",
+  --   event = "VeryLazy"
+  -- },
   {
     "karb94/neoscroll.nvim",
     lazy = false,
