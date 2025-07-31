@@ -15,7 +15,7 @@ return {
       large_buf = { size = 1024 * 256, lines = 10000 }, -- set global limits for large files for disabling features like treesitter
       autopairs = true, -- enable autopairs at start
       cmp = true, -- enable completion at start
-      diagnostics_mode = 3, -- diagnostic mode on start (0 = off, 1 = no signs/virtual text, 2 = no virtual text, 3 = on)
+      diagnostics = { virtual_text = true, virtual_lines = false }, -- diagnostic settings on startup
       highlighturl = true, -- highlight URLs at start
       notifications = true, -- enable notifications at start
     },
@@ -24,12 +24,26 @@ return {
       virtual_text = true,
       underline = true,
     },
+    -- passed to `vim.filetype.add`
+    filetypes = {
+      -- see `:h vim.filetype.add` for usage
+      extension = {
+        foo = "fooscript",
+      },
+      filename = {
+        [".foorc"] = "fooscript",
+      },
+      pattern = {
+        [".*/etc/foo/.*"] = "fooscript",
+      },
+    },
     -- vim options can be configured here
     options = {
       opt = { -- vim.opt.<key>
         relativenumber = true, -- sets vim.opt.relativenumber
         number = true, -- sets vim.opt.number
         spell = false, -- sets vim.opt.spell
+        signcolumn = "yes", -- sets vim.opt.signcolumn to yes
         wrap = false, -- sets vim.opt.wrap
       },
       g = { -- vim.g.<key>
@@ -42,10 +56,8 @@ return {
     -- NOTE: keycodes follow the casing in the vimdocs. For example, `<Leader>` must be capitalized
     mappings = {
       -- first key is the mode
-      v = {},
-
-      -- second key is the lefthand side of the map
       n = {
+        -- second key is the lefthand side of the map
         -- -- Jump to Definitions
         ["<Leader>j"] = { desc = " Definitions" },
         ["<Leader>jd"] = { "<cmd>lua vim.lsp.buf.definition()<cr>", desc = "Jump to definition" }, -- navigate buffer tabs
@@ -57,8 +69,12 @@ return {
         ["<Leader>jh"] = { "<cmd>lua vim.lsp.buf.hover()<cr>", desc = "Hover definition" },
 
         -- mappings seen under group name "Buffer"
-        ["[b"] = { function() require("astrocore.buffer").nav(-vim.v.count1) end, desc = "Previous buffer" },
+
+        -- navigate buffer tabs
         ["]b"] = { function() require("astrocore.buffer").nav(vim.v.count1) end, desc = "Next buffer" },
+        ["[b"] = { function() require("astrocore.buffer").nav(-vim.v.count1) end, desc = "Previous buffer" },
+
+        -- mappings seen under group name "Buffer"
         ["<Leader>bd"] = {
           function()
             require("astroui.status.heirline").buffer_picker(
@@ -67,10 +83,15 @@ return {
           end,
           desc = "Close buffer from tabline",
         },
+
         ["<A-Up>"] = { "<cmd>m-2<cr>" },
         ["<A-Down>"] = { "<cmd>m+<cr>" },
 
         ["<Leader>lj"] = { "<cmd>ClangdSwitchSourceHeader<cr>", desc = "Jump to .hcpp or .h" },
+        ["<Leader>gr"] = { "<cmd>OpenInGHRepo<cr>", desc = "Open In GH Repo" },
+        ["<Leader>go"] = { "<cmd>OpenInGHFile<cr>", desc = "Open In GH File" },
+        ["<Leader>gf"] = { "<cmd>OpenInGHFileLines<cr>", desc = "Open In GH in File and Line" },
+        ["<A-Tab>"] = { "<cmd>copilot#Accept<cr>", expr = true, replace_keycodes = false },
         -- tables with just a `desc` key will be registered with which-key if it's installed
         -- this is useful for naming menus
         -- ["<Leader>b"] = { desc = "Buffers" },
