@@ -71,6 +71,10 @@ return {
         ["<A-Down>"] = { "<cmd>m+<cr>" },
 
         ["<Leader>lj"] = { "<cmd>ClangdSwitchSourceHeader<cr>", desc = "Jump to .hcpp or .h" },
+        ["<Leader>gr"] = { "<cmd>OpenInGHRepo<cr>", desc = "Open In GH Repo" },
+        ["<Leader>go"] = { "<cmd>OpenInGHFile<cr>", desc = "Open In GH File" },
+        ["<Leader>gf"] = { "<cmd>OpenInGHFileLines<cr>", desc = "Open In GH in File and Line" },
+        ["<A-Tab>"] = { "<cmd>copilot#Accept<cr>", expr = true, replace_keycodes = false },
         -- tables with just a `desc` key will be registered with which-key if it's installed
         -- this is useful for naming menus
         -- ["<Leader>b"] = { desc = "Buffers" },
